@@ -1,0 +1,2 @@
+# MLFlow_Minio_PostgreSQL
+ This script connectes to the PostgreSQL and reades necessary table every 30 sec, if there are any changes in it, script creates run in the MLFlow experiment (if there is no any, it creates new), where you look how different metrics chnged during time on graf, and creates 3 files (mlflow_data.xlsx is the main one) where you can see all the information about the change in db, such as time, run id, metrics and what operation has been made to db. Than all thise connects to MinIO and pushes all folders and mlflow_data.xlsx in Bucket.
