@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/user/Desktop/Mlflow_minio_postgresql/mlruns/202011017208657217/17647b58490c4d0f8df06dddd7a5b8f4/artifacts
+end_time: 1690547109663
+entry_point_name: ''
+experiment_id: '202011017208657217'
+lifecycle_stage: active
+run_id: 17647b58490c4d0f8df06dddd7a5b8f4
+run_name: '2023-07-21 10:22:13'
+run_uuid: 17647b58490c4d0f8df06dddd7a5b8f4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1690547104923
+status: 3
+tags: []
+user_id: user
