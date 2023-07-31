@@ -9,11 +9,28 @@ import subprocess
 import boto3
 from botocore.client import Config
 
+import signal
+import sys
+
+def signal_handler(sig, frame):
+    print("\nВыполняются команды перед завершением...")
+    
+    os.remove("temp_mlflow_data.csv")
+    os.remove("changes_log.xlsx")
+    
+    print("Завершение скрипта.")
+    sys.exit(0)
+
+# Привязываем обработчик сигнала прерывания
+signal.signal(signal.SIGINT, signal_handler)
+
+
+
 # Настройка параметров MinIO
-MINIO_ENDPOINT = 'http://10.5.108.12:9000'
+MINIO_ENDPOINT = ' http://10.5.108.12:9000'
 ACCESS_KEY = 'minioadmin'
 SECRET_KEY = 'minioadmin'
-BUCKET_NAME = 'mlruns'
+BUCKET_NAME = 'test'
 
 # Инициализация клиента MinIO
 s3 = boto3.resource('s3',
@@ -154,7 +171,7 @@ while True:
                 last_checked_id = change["id"]
 
                 # Saving MLFlow's metrics in Excel file
-                save_mlflow_data_to_excel(202011017208657217, "mlflow_data.xlsx")
+                save_mlflow_data_to_excel(302930378401667153, "mlflow_data.xlsx")
 
                 print('Connecting to Minio')
                 # Загрузка файла
@@ -168,13 +185,8 @@ while True:
                 
         print('Connected, wating for next check...')
         time.sleep(30)
+        
     except Exception as e:
         print(f"Error occurred: {e}")
         print('Waiting for next try')
         time.sleep(30)
-
-
-
-
-
-

@@ -1,0 +1,6 @@
+artifact_location: file:///C:/Users/user/Desktop/Mlflow_minio_postgresql/MLFlow_Minio_PostgreSQL/mlruns/302930378401667153
+creation_time: 1690789624569
+experiment_id: '302930378401667153'
+last_update_time: 1690789624569
+lifecycle_stage: active
+name: AutoLog
