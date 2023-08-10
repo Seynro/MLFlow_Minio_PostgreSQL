@@ -72,7 +72,64 @@ Logs change information and metrics in an Excel file.
   - `data`: Data.
 
 ---
+### Setting up a Trigger and Function in PostgreSQL
 
+#### Creating a Function
+
+Before creating a trigger, you need to create a function that will be called by the trigger during a specific event:
+
+```sql
+CREATE OR REPLACE FUNCTION log_change()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'DELETE') THEN
+        INSERT INTO changes_log (operation, changed_data) VALUES ('DELETE', OLD::text);
+        RETURN OLD;
+    ELSIF (TG_OP = 'UPDATE') THEN
+        INSERT INTO changes_log (operation, changed_data) VALUES ('UPDATE', NEW::text);
+        RETURN NEW;
+    ELSIF (TG_OP = 'INSERT') THEN
+        INSERT INTO changes_log (operation, changed_data) VALUES ('INSERT', NEW::text);
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+#### Creating a Trigger
+
+After creating the function, you can create a trigger:
+
+- **INSERT**:
+```sql
+CREATE TRIGGER changes_after_insert
+AFTER INSERT ON test_data3
+FOR EACH ROW
+EXECUTE FUNCTION log_change();
+```
+
+- **UPDATE**:
+```sql
+CREATE TRIGGER changes_after_update
+AFTER UPDATE ON test_data3
+FOR EACH ROW
+EXECUTE FUNCTION log_change();
+```
+
+- **DELETE**:
+```sql
+CREATE TRIGGER changes_after_delete
+AFTER DELETE ON test_data3
+FOR EACH ROW
+EXECUTE FUNCTION log_change();
+```
+
+#### Verifying the Operation
+
+Perform INSERT, UPDATE, or DELETE operations on the `test_data3` table and ensure that the `log_change` function correctly logs these events.
+
+---
 ---
 
 ## Notes:
