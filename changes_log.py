@@ -13,32 +13,31 @@ import signal
 import sys
 
 def signal_handler(sig, frame):
-    print("\nВыполняются команды перед завершением...")
+    print("\Completing tasks befor the end...")
     
     os.remove("temp_mlflow_data.csv")
     os.remove("changes_log.xlsx")
     
-    print("Завершение скрипта.")
+    print("Ending script")
     sys.exit(0)
 
-# Привязываем обработчик сигнала прерывания
 signal.signal(signal.SIGINT, signal_handler)
 
 
 
-# Настройка параметров MinIO
+# MinIO Settings
 MINIO_ENDPOINT = ' http://10.5.108.12:9000'
 ACCESS_KEY = 'minioadmin'
 SECRET_KEY = 'minioadmin'
 BUCKET_NAME = 'test'
 
-# Инициализация клиента MinIO
+# MinIO's Client
 s3 = boto3.resource('s3',
     endpoint_url=f'{MINIO_ENDPOINT}',
     aws_access_key_id=ACCESS_KEY,
     aws_secret_access_key=SECRET_KEY,
     config=Config(signature_version='s3v4'),
-    region_name='us-east-1'  # Это может измениться в зависимости от вашей конфигурации
+    region_name='us-east-1' 
 )
 
 
